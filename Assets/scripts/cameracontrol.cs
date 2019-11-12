@@ -9,8 +9,8 @@ public class cameracontrol : MonoBehaviour {
     public float speed;
 	// Use this for initialization
 	void Start () {
-		
-	}
+        transform.position = new Vector3( player.transform.position.x, player.transform.position.y + .45f, -10 );
+    }
 
     // Update is called once per frame
     void Update()
@@ -42,13 +42,17 @@ public class cameracontrol : MonoBehaviour {
                 }
             }
 
-            if (player.transform.position.y > GetComponent<Transform>().position.y + 0.6f)
+            if (player.transform.position.y > GetComponent<Transform>().position.y + 0.60f)
             {
                 transform.position += new Vector3(0, speed * Time.deltaTime, 0);
             }
-            if (player.transform.position.y < transform.position.y - 0.4f)
+            if (player.transform.position.y < transform.position.y - 0.45f)
             {
                 transform.position -= new Vector3(0, speed * Time.deltaTime, 0);
+            }
+            if (player.transform.position.y < transform.position.y - 0.65f)
+            {
+                transform.position -= new Vector3(0, speed * 4* Time.deltaTime, 0);
             }
 
             if (player.onmoveground && !player.jumping)

@@ -5,20 +5,15 @@ using UnityEngine.UI;
 
 public class menu : MonoBehaviour {
     public int menustate;
-    public GameObject Logoscreen;
     public GameObject main;
     public GameObject levelselect;
     public GameObject instructions;
-    public Image logo;
-    public float timer;
 
     void Start () {
         menustate = 0;
-        timer = 3;
         instructions.SetActive(false);
-        main.SetActive(false);
+        main.SetActive(true);
         levelselect.SetActive(false);
-        Logoscreen.SetActive(true);
 
         Button[] levels = levelselect.GetComponentsInChildren<Button>();
 
@@ -41,30 +36,6 @@ public class menu : MonoBehaviour {
             }
         }
     }
-
-    void Update () {
-		if(timer > 0)
-        {
-            timer -= Time.deltaTime;
-            if(timer >= 2)
-            {
-                Color temp = logo.color;
-                temp.a = 3 - timer;
-                logo.color = temp;
-            }
-            else if(timer < 1)
-            {
-                Color temp = logo.color;
-                temp.a = timer;
-                logo.color = temp;
-            }
-            if(timer <= 0)
-            {
-                Logoscreen.SetActive(false);
-                main.SetActive(true);
-            }
-        }
-	}
 
     public void site()
     {

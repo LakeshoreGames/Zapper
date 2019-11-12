@@ -30,6 +30,7 @@ public class Player : MonoBehaviour {
 
     public float movetime;
     public bool reversed;
+    public bool paused;
     public GameObject arm;
     public GameObject deathanim;
 
@@ -50,21 +51,41 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if(health <= 0)
+
+        if (Input.GetKeyDown("escape") && !paused)
         {
-            Manager.instance.deathtimer = 1f;
-            Instantiate(deathanim, transform.position,transform.rotation);
-            Destroy(gameObject);
+            paused = true;
+            Time.timeScale = 0;
+            lasersfx.Stop();
+            attack.SetActive(false);
+            Manager.instance.pause_game();
+        }
+        else if (Input.GetKeyDown("escape") && paused)
+        {
+            paused = false;
+            Time.timeScale = 1;
+            Manager.instance.unpause_game();
+
         }
 
-        if(invuln)
+        if (!paused)
         {
-            afterHitInvuln();
-        }
+            if (health <= 0)
+            {
+                Manager.instance.deathtimer = 1f;
+                Instantiate(deathanim, transform.position, transform.rotation);
+                Destroy(gameObject);
+            }
 
-        horizontal();
-        mousestuff();
-        vertical();
+            if (invuln)
+            {
+                afterHitInvuln();
+            }
+
+            horizontal();
+            mousestuff();
+            vertical();
+        }
     }
 
     public void OnCollisionEnter2D(Collision2D collision)

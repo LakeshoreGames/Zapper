@@ -8,6 +8,7 @@ public class movableplatform : MovingPlatform {
     public bool loop;
     public bool fin;
     public int destnum;
+
     public Vector2[] dests;
     // Use this for initialization
     void Start () {
@@ -30,13 +31,29 @@ public class movableplatform : MovingPlatform {
 	
 	// Update is called once per frame
 	void Update () {
-        if (GetComponentInParent<battery>().powered)
+
+        if (GetComponentInParent<battery>() != null)
         {
-            on = true;
+            if (GetComponentInParent<battery>().powered)
+            {
+                on = true;
+            }
+            else
+            {
+                on = false;
+            }
         }
         else
         {
-            on = false;
+            if (GetComponentInChildren<battery>().powered)
+            {
+                on = true;
+            }
+            else
+            {
+                on = false;
+            }
+
         }
 
         if (on && !fin)

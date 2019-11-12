@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class levelloader : MonoBehaviour {
+public class levelloader : MonoBehaviour  {
     public Texture2D level;
     public Color32[] levelc;
+    public Sprite[] sprites;
+
+    public bool just_walls;
 
     public int[,] floormap;
     public GameObject playercamera;
@@ -63,83 +66,85 @@ public class levelloader : MonoBehaviour {
             }
         }
 	}
-    [ExecuteInEditMode]
+
     void buildmap(Color32 col,int x,int y)
     {
-        Debug.Log(col.ToString());
         if (col.Equals(tilec))
         {
             floormap[x, y] = 1;
             return;
         }
-        if (col.Equals(walkenemyc))
+        if (!just_walls)
         {
-            Instantiate(walkenemy, new Vector3(0.32f * x, 0.32f * y, 0), transform.rotation,enemies);
-            return;
-        }
-        if (col.Equals(flyenemyc))
-        {
-            Instantiate(flyenemy, new Vector3(0.32f * x, 0.32f * y, 0), transform.rotation,enemies);
-            return;
-        }
-        if (col.Equals(turretc))
-        {
-            Instantiate(turret, new Vector3(0.32f * x, 0.32f * y, 0), transform.rotation, enemies);
-            return;
-        }
-        if (col.Equals(batterychargec))
-        {
-            Instantiate(batterycharge, new Vector3(0.32f * x, 0.32f * y, 0), transform.rotation, stuff);
-            return;
-        }
-        if (col.Equals(batteryholdc))
-        {
-            Instantiate(batteryhold, new Vector3(0.32f * x, 0.32f * y, 0), transform.rotation, stuff);
-            return;
-        }
-        if (col.Equals(batterytogglec))
-        {
-            Instantiate(batterytoggle, new Vector3(0.32f * x, 0.32f * y, 0), transform.rotation, stuff);
-            return;
-        }
-        if (col.Equals(doordownc))
-        {
-            Instantiate(doordown, new Vector3(0.32f * x, 0.32f * y, 0), transform.rotation, stuff);
-            return;
-        }
-        if (col.Equals(doorupc))
-        {
-            Instantiate(doorup, new Vector3(0.32f * x, 0.32f * y, 0), transform.rotation, stuff);
-            return;
-        }
-        if (col.Equals(doorrightc))
-        {
-            Instantiate(doorright, new Vector3(0.32f * (x+2), 0.32f * y, 0), transform.rotation, stuff);
-            return;
-        }
-        if (col.Equals(doorleftc))
-        {
-            Instantiate(doorleft, new Vector3(0.32f * (x-2), 0.32f * y, 0), transform.rotation, stuff);
-            return;
-        }
-        if (col.Equals(movingplatformc))
-        {
-            Instantiate(movingplatform, new Vector3(0.32f * x, 0.32f * y, 0), transform.rotation,stuff);
-            return;
-        }
-        if (col.Equals(Playerc))
-        {
-            Debug.Log("player");
-            GameObject temp2 = Instantiate(Player, new Vector3(0.32f * x, 0.32f * y, 0), transform.rotation);
-            GameObject temp =  Instantiate(playercamera, new Vector3(0.32f * x, 0.32f * y, -10), transform.rotation);
-            temp.GetComponent<cameracontrol>().player = temp2.GetComponent<Player>();
-            return;
-        }
-        if (col.Equals(deathfloorc))
-        {
-            Debug.Log("lava");
-            Instantiate(deathfloor, new Vector3(0.32f * x, 0.32f * y, 0), transform.rotation,walls);
-            return;
+            if (col.Equals(walkenemyc))
+            {
+                Instantiate(walkenemy, new Vector3(0.32f * x, 0.32f * y, 0), Quaternion.Euler(0, 0, 0), enemies);
+                return;
+            }
+            if (col.Equals(flyenemyc))
+            {
+                Instantiate(flyenemy, new Vector3(0.32f * x, 0.32f * y, 0), Quaternion.Euler(0, 0, 0), enemies);
+                return;
+            }
+            if (col.Equals(turretc))
+            {
+                Instantiate(turret, new Vector3(0.32f * x, 0.32f * y, 0), Quaternion.Euler(0, 0, 0), enemies);
+                return;
+            }
+            if (col.Equals(batterychargec))
+            {
+                Instantiate(batterycharge, new Vector3(0.32f * x, 0.32f * y, 0), Quaternion.Euler(0, 0, 0), stuff);
+                return;
+            }
+            if (col.Equals(batteryholdc))
+            {
+                Instantiate(batteryhold, new Vector3(0.32f * x, 0.32f * y, 0), Quaternion.Euler(0, 0, 0), stuff);
+                return;
+            }
+            if (col.Equals(batterytogglec))
+            {
+                Instantiate(batterytoggle, new Vector3(0.32f * x, 0.32f * y, 0), Quaternion.Euler(0, 0, 0), stuff);
+                return;
+            }
+            if (col.Equals(doordownc))
+            {
+                Instantiate(doordown, new Vector3(0.32f * x, 0.32f * y, 0), Quaternion.Euler(0, 0, 0), stuff);
+                return;
+            }
+            if (col.Equals(doorupc))
+            {
+                Instantiate(doorup, new Vector3(0.32f * x, 0.32f * y, 0), Quaternion.Euler(0, 0, 0), stuff);
+                return;
+            }
+            if (col.Equals(doorrightc))
+            {
+                Instantiate(doorright, new Vector3(0.32f * (x + 2), 0.32f * y, 0), Quaternion.Euler(0, 0, 0), stuff);
+                return;
+            }
+            if (col.Equals(doorleftc))
+            {
+                Instantiate(doorleft, new Vector3(0.32f * (x - 2), 0.32f * y, 0), Quaternion.Euler(0, 0, 0), stuff);
+                return;
+            }
+            if (col.Equals(movingplatformc))
+            {
+                Instantiate(movingplatform, new Vector3(0.32f * x, 0.32f * y, 0), Quaternion.Euler(0, 0, 0), stuff);
+                return;
+            }
+            if (col.Equals(Playerc))
+            {
+                Debug.Log("player");
+                GameObject temp2 = Instantiate(Player, new Vector3(0.32f * x, 0.32f * y, 0), Quaternion.Euler(0, 0, 0));
+                GameObject temp = Instantiate(playercamera, new Vector3(0.32f * x, 0.32f * y, -10), Quaternion.Euler(0, 0, 0));
+                temp.GetComponent<cameracontrol>().player = temp2.GetComponent<Player>();
+                return;
+            }
+            if (col.Equals(deathfloorc))
+            {
+                Debug.Log("lava");
+                Instantiate(deathfloor, new Vector3(0.32f * x, 0.32f * y, 0), Quaternion.Euler(0, 0, 0), walls);
+                return;
+            }
         }
     }
 
@@ -167,7 +172,7 @@ public class levelloader : MonoBehaviour {
                 bleft = false;
                 if (floormap[i,j] == 1)
                 {
-                    GameObject temp = Instantiate(tile, new Vector3(0.32f * i, 0.32f * j, 0), transform.rotation,walls);
+                    GameObject temp = Instantiate(tile, new Vector3(0.32f * i, 0.32f * j, 0), Quaternion.Euler(0,0,0),walls);
                     if(i>0)
                     {
                         if(floormap[i-1,j] == 1)
@@ -229,174 +234,174 @@ public class levelloader : MonoBehaviour {
 
                     if (!up && !down && !left && right && !bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 3;
+                        temp.GetComponent<SpriteRenderer>().sprite  = sprites[3];
                     }
                     if (!up && !down && left && !right && !bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 0;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[0];
                     }
                     if (!up && down && !left && !right && !bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 1;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[1];
                     }
                     if (up && !down && !left && !right && !bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 7;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[7];
                     }
                     ////////
                     if (up && down && !left && !right && !bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 9;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[9];
                     }
                     if (up && !down && left && !right && !bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 8;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[8];
                     }
                     if (up && !down && !left && right && !bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 11;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[11];
                     }
                     ///////
                     if (!up && down && !left && right && !bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 5;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[5];
                     }
                     if (!up && down && left && !right && !bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 2;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[2];
                     }
                     /////
                     if (!up && !down && left && right && !bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 4;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[4];
                     }
                     /////
                     if (!up && down && left && right && !bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 6;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[6];
                     }
                     if (up && !down && left && right && !bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 12;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[12];
                     }
                     if (up && down && left && !right && !bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 10;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[10];
                     }
                     if (up && down && !left && right && !bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 13;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[13];
                     }
                     if (up && down && left && right && !bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 14;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[14];
                     }
                     ////
                     if (up && !down && !left && right && !bright && tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 15;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[15];
                     }
                     if (up && !down && left && !right && !bright && !tright && !bleft && tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 17;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[17];
                     }
                     if (up && !down && left && right && !bright && tright && !bleft && tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 16;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[16];
                     }
                     ///
                     if (!up && down && !left && right && bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 22;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[22];
                     }
                     if (!up && down && left && !right && !bright && !tright && bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 21;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[21];
                     }
                     if (!up && down && left && right && bright && !tright && bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 23;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[23];
                     }
                     ///
                     if (up && down && left && right && bright && tright && bleft && tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 19;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[19];
                     }
                     if (up && down && left && !right && !bright && !tright && bleft && tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 20;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[20];
                     }
                     if (up && down && !left && right && bright && tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 18;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[18];
                     }
                     ///
                     if (up && !down && left && right && !bright && tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 24;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[24];
                     }
                     if (up && !down && left && right && !bright && !tright && !bleft && tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 25;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[25];
                     }
                     if (!up && down && left && right && bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 26;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[26];
                     }
                     if (!up && down && left && right && !bright && !tright && bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 27;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[27];
                     }
                     ///
                     if (up && down && left && right && !bright && tright && bleft && tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 28;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[28];
                     }
                     if (up && down && left && right && bright && !tright && bleft && tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 29;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[29];
                     }
                     if (up && down && left && right && bright && tright && !bleft && tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 30;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[30];
                     }
                     if (up && down && left && right && bright && tright && bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 31;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[31];
                     }
                     ////
                     if (up && down && left && right && bright && !tright && bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 32;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[32];
                     }
                     if (up && down && left && right && !bright && !tright && bleft && tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 33;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[33];
                     }
                     if (up && down && left && right && !bright && tright && !bleft && tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 34;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[34];
                     }
                     if (up && down && left && right && bright && tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 35;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[35];
                     }
                     ///
                     if (up && down && !left && right && bright && !tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 36;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[36];
                     }
                     if (up && down && !left && right && !bright && tright && !bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 37;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[37];
                     }
                     if (up && down && left && !right && !bright && !tright && !bleft && tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 38;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[38];
                     }
                     if (up && down && left && !right && !bright && !tright && bleft && !tleft)
                     {
-                        temp.GetComponent<wallsprite>().spritenum = 39;
+                        temp.GetComponent<SpriteRenderer>().sprite = sprites[39];
                     }
                 }
             }
